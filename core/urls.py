@@ -24,9 +24,11 @@ urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('djangoadmin/',admin.site.urls),
     path('',views.home, name='home'),
-    # path('accounts/', include('accounts.urls')),
+    path('welcome/',views.welcome, name='welcome'),
+    path('accounts/', include('accounts.urls')),
     # path('complaints/', include('complaints.urls')),
     # path('dashboard/', include('dashboard.urls')),
-
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / 'core' / 'static')
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

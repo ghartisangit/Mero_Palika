@@ -7,7 +7,7 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = (
         'email', 'first_name', 'last_name', 'username',
-        'user_type', 'municipality', 'ward',   
+        'user_type', 'ward',   
         'last_login', 'date_joined', 'is_active'
     )
     list_display_links = ('email', 'first_name', 'last_name')
@@ -21,7 +21,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': (
                 'first_name', 'last_name', 'username',
                 'phone_number', 'user_type',
-                'municipality', 'ward',  
+                 'ward',  
             )
         }),
         ('Permissions', {
@@ -38,7 +38,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': (
                 'email', 'first_name', 'last_name', 'username',
                 'phone_number', 'user_type',
-                'municipality', 'ward',   
+                'ward',   
                 'password1', 'password2',
                 'is_active', 'is_staff'
             ),
