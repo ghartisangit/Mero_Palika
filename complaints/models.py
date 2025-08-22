@@ -66,8 +66,6 @@ class Complaint(models.Model):
     def __str__(self):
         return self.title
     
-    # def report_count(self):
-    #     return self.reports.count()
 
     def like_count(self):
         return self.likes.count()
@@ -92,10 +90,3 @@ class Comment(models.Model):
     class Meta:
         unique_together = ('user', 'complaint')
 
-
-# class Report(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, related_name='reports')
-
-#     class Meta:
-#         unique_together = ('user', 'complaint')

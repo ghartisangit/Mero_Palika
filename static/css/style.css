@@ -19,6 +19,9 @@ body {
   border-radius: 12px;
   width: 100%;
   max-width: 380px;
+  min-height: 450px;        /* ✅ Prevent shrinking too small */
+  max-height: 90vh;         /* ✅ Prevent overflowing the screen */
+  overflow-y: auto;         /* ✅ Scroll inside if content is too tall */
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 

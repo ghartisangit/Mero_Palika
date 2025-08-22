@@ -29,18 +29,20 @@ class RegistrationForm(forms.ModelForm):
         confirm_password = cleaned_data.get('confirm_password')
         municipality = cleaned_data.get('municipality')
         ward = cleaned_data.get('ward')
+        user_type = cleaned_data.get('user_type', 'user')  
 
-     
+        # Password validation
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("Password does not match!")
 
-    
-        if not municipality:
-            raise forms.ValidationError("Municipality is required.")
-        if not ward:
-            raise forms.ValidationError("Ward is required.")
+        # Municipality & Ward required only for normal users
+        if user_type == 'user':
+            if not municipality:
+                raise forms.ValidationError("Municipality is required for normal users.")
+            if not ward:
+                raise forms.ValidationError("Ward is required for normal users.")
 
-        return cleaned_data  
+        return cleaned_data
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,11 +52,11 @@ class RegistrationForm(forms.ModelForm):
         self.fields['phone_number'].widget.attrs['placeholder'] = 'Enter Phone Number'
         self.fields['email'].widget.attrs['placeholder'] = 'Enter Email Address'
 
-    
+        # Dropdown styling
         self.fields['municipality'].widget.attrs['class'] = 'form-select'
         self.fields['ward'].widget.attrs['class'] = 'form-select'
 
-       
+        # Input fields styling
         for field in self.fields:
             if field not in ['municipality', 'ward']:
                 self.fields[field].widget.attrs['class'] = 'form-control'
