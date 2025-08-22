@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+  {% include 'includes/alerts.html' %}
+  <div class="container">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <aside class="col-md-3">
+        <a href="{% url 'list_information' %}" class="btn btn-outline-primary btn-block">View Informations</a>
+        <a class="btn btn-light btn-block" href="javascript:history.back()">
+          <i class="fa fa-arrow-left"></i> <span class="text">Back</span>
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="col-md-9">
+        <article class="card">
+          <header class="card-header">
+            <strong class="d-inline-block mr-3">Upload Information</strong>
+          </header>
+
+          <div class="card-body">
+            <form action="{% url 'create_information' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" placeholder="Enter info title" required>
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="form-control" rows="4" placeholder="Describe the info in detail..." required></textarea>
+              </div>
+
+              <input type="submit" value="Submit Information" class="btn btn-primary mt-2">
+            </form>
+          </div>
+        </article>
+      </main>
+
+    </div> <!-- row -->
+  </div>
+</section>
+{% endblock %}
