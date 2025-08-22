@@ -23,7 +23,6 @@ class Notice(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
     ward = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,7 +37,6 @@ class Training(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
     ward = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, blank=True)
     training_status = models.ForeignKey(TrainingStatus, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='training/', blank=True, null=True)
@@ -66,7 +64,6 @@ class Vacancy(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
     ward = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, blank=True)
     vacancy_status = models.ForeignKey(TrainingStatus, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='vacancy/', blank=True, null=True)
@@ -92,7 +89,6 @@ class Information(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
     ward = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, blank=True)
     
     

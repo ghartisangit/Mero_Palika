@@ -23,16 +23,16 @@ class WardAdmin(admin.ModelAdmin):
 class ComplaintAdmin(admin.ModelAdmin):
     form = ComplaintAdminForm
     list_display = [
-        'id', 'title', 'municipality', 'ward', 'status', 'user', 'is_hidden',
+        'id', 'title', 'ward', 'status', 'user', 'is_hidden',
         'like_count', 'comment_count'  # removed report_count
     ]
-    list_filter = ['municipality', 'status', 'is_hidden']
+    list_filter = [ 'status', 'is_hidden']
     search_fields = ['title', 'description', 'user__email', 'user__username']
-    readonly_fields = ('like_count', 'comment_count')  # removed report_count
+    readonly_fields = ('like_count', 'comment_count')  
 
     fieldsets = (
         (None, {
-            'fields': ('title', 'description', 'user', 'municipality', 'ward', 'category', 'status', 'is_hidden')
+            'fields': ('title', 'description', 'user', 'ward', 'category', 'status', 'is_hidden')
         }),
         ('Counts', {
             'fields': ('like_count', 'comment_count'),

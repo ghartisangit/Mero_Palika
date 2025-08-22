@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <section class="section-content padding-y">
   <div class="card mx-auto" style="max-width: 520px; margin-top: 40px">
@@ -34,18 +33,15 @@
         </div>
 
         <!-- Municipality + Ward -->
-        <div class="form-group">
-          <label for="ward_id">Select Municipality and Ward:</label>
-          <select name="ward_id" id="ward_id" class="form-control" required>
-            <option value="">Select Municipality</option>
-            {% for ward in wards %}
-              <option value="{{ ward.id }}">
-                {{ ward.municipality }} - Ward {{ ward.ward_number }}
-              </option>
-            {% endfor %}
-          </select>
+        <div class="form-row">
+           <div class="form-group col-md-6">
+         <label for="{{ form.ward.id_for_label }}">Select Ward</label>
+        {{ form.ward }}
+        {% if form.ward.errors %}
+            <div class="text-danger">{{ form.ward.errors }}</div>
+        {% endif %}
+           </div>
         </div>
-
         <!-- Passwords -->
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -60,7 +56,9 @@
 
         <!-- Submit -->
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">Register</button>
+          <button type="submit" class="btn btn-primary btn-block">
+            Register
+          </button>
         </div>
         {{ form.email.errors }} {{ form.non_field_errors }}
       </form>

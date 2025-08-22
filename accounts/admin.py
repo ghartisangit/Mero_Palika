@@ -14,7 +14,7 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ('last_login', 'date_joined')
     ordering = ('-date_joined',)
     filter_horizontal = ()
-    list_filter = ('user_type', 'municipality', 'ward', 'is_active', 'is_staff')  
+    list_filter = ('user_type', 'ward', 'is_active', 'is_staff')  
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {

@@ -52,7 +52,6 @@ class Complaint(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    municipality = models.ForeignKey(Municipality, on_delete=models.SET_NULL, null=True)
     ward = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='complaints/', blank=True, null=True)

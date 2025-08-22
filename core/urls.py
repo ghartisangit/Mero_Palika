@@ -26,8 +26,8 @@ urlpatterns = [
     path('',views.home, name='home'),
     path('welcome/',views.welcome, name='welcome'),
     path('accounts/', include('accounts.urls')),
-    # path('complaints/', include('complaints.urls')),
-    # path('dashboard/', include('dashboard.urls')),
+    path('complaints/', include('complaints.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / 'core' / 'static')

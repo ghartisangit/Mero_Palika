@@ -1,104 +1,69 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow sticky-top">
-  <div class="container">
-    <div class="col-lg-2 col-md-3 col-6">
-      <a
-        href="{% url 'home' %}"
-        class="brand-wrap text-primary font-weight-bold"
-        style="font-size: 24px; font-family: 'Segoe UI', sans-serif"
-      >
-        MeroPalika
-      </a>
-    </div>
+<header class="section-header">
+  <section class="header-main border-bottom">
+    <div class="container">
+      <div class="row align-items-center">
+        
+        <!-- Logo -->
+        <div class="col-lg-3 col-md-4 col-6">
+          <a href="{% url 'home' %}" class="brand-wrap text-primary font-weight-bold" style="font-size: 24px; font-family: 'Segoe UI', sans-serif">
+            Meroपालिका
+          </a>
+        </div>
 
-    <!-- Toggler for mobile -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarContent"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <!-- Navbar Links -->
+        <div class="col-lg-6 d-none d-lg-flex justify-content-center">
+          <ul class="navbar-nav d-flex flex-row gap-4">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'all_complaints' %}">Complain</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Vacancy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Notice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Guidelines</a>
+            </li>
+          </ul>
+        </div>
 
-    <!-- Navbar Content -->
-    <div class="collapse navbar-collapse" id="navbarContent">
-      <!-- Navigation Links -->
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="">Complain</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Vacancy</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Notice</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Guidlines</a></li>
-      </ul>
+        <!-- Sign In / Register -->
+        <div class="col-lg-3 col-md-8 col-6 text-end">
+          <div class="widget-header">
+            {% if user.is_authenticated %}
+            <small class="title text-muted">Welcome {{ user.username }}</small>
+            <div>
+              {% if user.user_type == 'user' %}
+                <a href="{% url 'post_complaint' %}">Create Complain</a> | 
+                <a href="{% url 'my_profile' %}">My Profile</a> | 
+                <a href="{% url 'logout' %}">Logout</a>
+              {% elif user.user_type == 'municipality' %}
+                <a href="{% url 'municipality_dashboard' %}">Dashboard</a> | 
+                <a href="{% url 'my_profile' %}">My Profile</a> | 
+                <a href="{% url 'logout' %}">Logout</a>
+              {% elif user.user_type == 'admin' %}
+                <a href="{% url 'admin_dashboard' %}">Dashboard</a> | 
+                <a href="#">User Details</a> | 
+                <a href="{% url 'logout' %}">Logout</a>
+              {% else %}
+                <a href="{% url 'logout' %}">Logout</a>
+              {% endif %}
+            </div>
+            {% else %}
+            <small class="title text-muted">Welcome guest!</small>
+            <div>
+              <a href="#">Create Complain</a> | 
+              <a href="{% url 'login' %}">Sign in</a> | 
+              <a href="{% url 'register' %}">Register</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
 
-      <!-- Sign In / Profile Links -->
-      <div class="d-flex align-items-center">
-        {% comment %} {% if user.is_authenticated %}
-        <span class="me-2 small text-muted">Welcome {{ user.username }}</span>
-        {% if user.user_type == 'user' %}
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'post_complaint' %}"
-          >Complain</a
-        >
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'my_profile' %}"
-          >My Profile</a
-        >
-        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
-          >Logout</a
-        >
-        {% elif user.user_type == 'municipality' %}
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'municipality_dashboard' %}"
-          >Dashboard</a
-        >
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'my_profile' %}"
-          >My Profile</a
-        >
-        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
-          >Logout</a
-        >
-        {% elif user.user_type == 'admin' %}
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'admin_dashboard' %}"
-          >Dashboard</a
-        >
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'user_details' %}"
-          >User Details</a
-        >
-        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
-          >Logout</a
-        >
-        {% else %}
-        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
-          >Logout</a
-        >
-        {% endif %} {% else %} {% endcomment %}
-        <span class="me-2 small text-muted">Welcome guest!</span>
-        {% comment %}
-        <a
-          class="btn btn-outline-primary btn-sm me-1"
-          href="{% url 'post_complaint' %}"
-          >Create Post</a
-        >
-        {% endcomment %}
-        <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'login' %}"
-          >Sign In</a
-        >
-        <a class="btn btn-outline-success btn-sm" href="{% url 'register' %}"
-          >Register</a
-        >
-        {% comment %} {% endif %} {% endcomment %}
       </div>
     </div>
-  </div>
-</nav>
+  </section>
+</header>

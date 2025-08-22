@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
+
 USER_TYPE_CHOICES = (
     ('user', 'User'),
     ('municipality', 'Municipality'),
@@ -52,18 +53,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email           = models.EmailField(max_length=100, unique=True)
     phone_number    = models.CharField(max_length=50)
     user_type       = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
-    municipality    = models.ForeignKey(
-        'complaints.Municipality',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-    ward            = models.ForeignKey(
-        'complaints.Ward',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
+    ward = models.ForeignKey('complaints.Ward', on_delete=models.CASCADE, null=False, blank=False)
 
     # Required fields
     date_joined     = models.DateTimeField(auto_now_add=True)
