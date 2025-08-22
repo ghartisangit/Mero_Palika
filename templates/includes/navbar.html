@@ -2,13 +2,23 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow sticky-top">
   <div class="container">
-    <!-- Logo -->
-    <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
-      <span class="badge bg-primary">AWAZ</span>
-    </a>
+    <div class="col-lg-2 col-md-3 col-6">
+      <a
+        href="{% url 'home' %}"
+        class="brand-wrap text-primary font-weight-bold"
+        style="font-size: 24px; font-family: 'Segoe UI', sans-serif"
+      >
+        MeroPalika
+      </a>
+    </div>
 
     <!-- Toggler for mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -22,52 +32,71 @@
         <li class="nav-item"><a class="nav-link" href="#">Guidlines</a></li>
       </ul>
 
-      <!-- Search Bar -->
-      <div class="d-flex me-3">
-        {% if user.is_authenticated %}
-          {% if user.user_type == 'user' %}
-            <form action="" method="get" class="d-flex">
-              <input type="text" class="form-control me-2" name="q" placeholder="Search" required>
-              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-            </form>
-          {% elif user.user_type == 'admin' %}
-            <form action="" method="get" class="d-flex">
-              <input type="text" class="form-control me-2" name="q" placeholder="Search" required>
-              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-            </form>
-          {% elif user.user_type == 'municipality' %}
-            <form action="" method="get" class="d-flex">
-              <input type="text" class="form-control me-2" name="q" placeholder="Search" required>
-              <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-            </form>
-          {% endif %}
-        {% endif %}
-      </div>
-
       <!-- Sign In / Profile Links -->
       <div class="d-flex align-items-center">
         {% comment %} {% if user.is_authenticated %}
-          <span class="me-2 small text-muted">Welcome {{ user.username }}</span>
-          {% if user.user_type == 'user' %}
-            <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'post_complaint' %}">Complain</a>
-            <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'my_profile' %}">My Profile</a>
-            <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">Logout</a>
-          {% elif user.user_type == 'municipality' %}
-            <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'municipality_dashboard' %}">Dashboard</a>
-            <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'my_profile' %}">My Profile</a>
-            <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">Logout</a>
-          {% elif user.user_type == 'admin' %}
-            <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'admin_dashboard' %}">Dashboard</a>
-            <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'user_details' %}">User Details</a>
-            <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">Logout</a>
-          {% else %}
-            <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">Logout</a>
-          {% endif %}
-        {% else %} {% endcomment %}
-          <span class="me-2 small text-muted">Welcome guest!</span>
-          {% comment %} <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'post_complaint' %}">Create Post</a> {% endcomment %}
-          <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'login' %}">Sign In</a>
-          <a class="btn btn-outline-success btn-sm" href="{% url 'register' %}">Register</a>
+        <span class="me-2 small text-muted">Welcome {{ user.username }}</span>
+        {% if user.user_type == 'user' %}
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'post_complaint' %}"
+          >Complain</a
+        >
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'my_profile' %}"
+          >My Profile</a
+        >
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
+          >Logout</a
+        >
+        {% elif user.user_type == 'municipality' %}
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'municipality_dashboard' %}"
+          >Dashboard</a
+        >
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'my_profile' %}"
+          >My Profile</a
+        >
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
+          >Logout</a
+        >
+        {% elif user.user_type == 'admin' %}
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'admin_dashboard' %}"
+          >Dashboard</a
+        >
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'user_details' %}"
+          >User Details</a
+        >
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
+          >Logout</a
+        >
+        {% else %}
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}"
+          >Logout</a
+        >
+        {% endif %} {% else %} {% endcomment %}
+        <span class="me-2 small text-muted">Welcome guest!</span>
+        {% comment %}
+        <a
+          class="btn btn-outline-primary btn-sm me-1"
+          href="{% url 'post_complaint' %}"
+          >Create Post</a
+        >
+        {% endcomment %}
+        <a class="btn btn-outline-primary btn-sm me-1" href="{% url 'login' %}"
+          >Sign In</a
+        >
+        <a class="btn btn-outline-success btn-sm" href="{% url 'register' %}"
+          >Register</a
+        >
         {% comment %} {% endif %} {% endcomment %}
       </div>
     </div>
