@@ -1,107 +1,105 @@
 MeroPalika
 
-A Django-based municipal management system designed to streamline citizen services within Nepali local government contexts.
+MeroPalika is a Django-based municipal management system designed to streamline citizen services within Nepali local government contexts.
 
-Functionality
+Features
 
-Complaint Submission: Allows residents to file grievances or complaints.
+Complaint Submission – Citizens can file grievances or complaints.
 
-Vacancy Postings: Local authorities can post and manage job vacancies.
+Vacancy Postings – Municipal authorities can post and manage job opportunities.
 
-Notices & Announcements: Publish important bulletins for citizens.
+Notices & Announcements – Publish important updates for citizens.
 
-Training Programs: Create and manage training initiatives.
+Training Programs – Create and manage training events.
 
-Modular Apps: Built using standalone Django apps:
+Role-Based Apps –
 
-accounts — User authentication and profile management.
+accounts → User authentication and profile management
 
-complaints — Handling submissions and statuses.
+complaints → Handling complaint submissions and statuses
 
-dashboard — Administrative and overview interfaces.
+dashboard → Municipality/admin dashboards
 
-notices — For notice publication and management.
+notices → Notice publication and management
 
-Tech Stack & Architecture
+Tech Stack
 Component	Technology
-Web Framework	Django (Python)
-Front-end	HTML, CSS, Bootstrap
-File Handling	media/complaints
-Templates	Stored in templates/ directory
-Configuration	Settings in env/ (likely .env)
-Dependencies	Listed in requirements.txt
-Version Control	Managed via Git (.gitignore)
-Getting Started
+Framework	Django (Python)
+Frontend	HTML, CSS, JavaScript
+File Handling	Media uploads (media/)
+Templates	Django Templates (templates/)
+Configurations	.env file for secrets/env
+Database	SQLite/PostgreSQL/MySQL
+Dependencies	requirements.txt
+Version Control	Git + GitHub
+Installation
 Prerequisites
 
-Python ≥ 3.8
+Python 3.8+
 
-Virtual environment tool (venv or virtualenv)
+Virtual environment (venv or virtualenv)
 
-Installation Steps
+Steps
+# Clone the repository
 git clone https://github.com/samir-28/MeroPalika.git
 cd MeroPalika
 
-# Create and activate virtual environment
+# Create & activate virtual environment
 python -m venv venv
-source venv/bin/activate          # On Windows: .\venv\Scripts\activate
+source venv/bin/activate     # On Windows: .\venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Configure environment settings
-# Copy or update your .env file in the 'env' folder with proper database and email credentials
-
-# Apply database migrations
+# Apply migrations
 python manage.py migrate
 
-# (Optional) Create superuser for admin access
+# Create superuser (optional)
 python manage.py createsuperuser
 
-# Run the development server
+# Run the server
 python manage.py runserver
 
 Usage
 
-Visit http://127.0.0.1:8000/ in your browser.
+Open http://127.0.0.1:8000/
+ in your browser.
 
-Register or log in via the accounts module.
+Register/login through the Accounts module.
 
-Explore features:
+Explore available features:
 
-Submit complaints.
+Submit/view complaints
 
-View notices.
+View notices
 
-Explore vacancy listings.
+Apply for vacancies
 
-(Admin) Access dashboards and training programs.
+Access admin dashboard (for municipalities)
 
-Project Structure Overview
+Project Structure
 MeroPalika/
-├── accounts/        # Authentication & user profile app
-├── complaints/      # Citizen complaint handling
-├── core/            # Shared utilities and base settings
-├── dashboard/       # Admin dashboard functionality
-├── notices/         # Notice publication system
-├── static/          # Static assets: CSS, JS, images
-├── templates/       # Shared and app-level HTML templates
-├── media/complaints # Uploaded files via complaints module
-├── env/             # Environment configuration files (e.g., .env)
-├── manage.py        # Django manage utility
-├── requirements.txt # Project dependencies
-└── .gitignore       # Files/directories to exclude from Git
+│── accounts/        # User accounts & authentication
+│── complaints/      # Complaint management
+│── core/            # Core settings & utilities
+│── dashboard/       # Municipality/admin dashboards
+│── notices/         # Notices & announcements
+│── static/          # CSS, JS, Images
+│── templates/       # HTML templates
+│── media/complaints # Uploaded complaint files
+│── env/             # Environment config
+│── manage.py        # Django management script
+│── requirements.txt # Python dependencies
+└── .gitignore       # Ignored files for Git
 
-Contributing
-
-Contributions are welcome! Please:
+Contribution
 
 Fork the repository
 
-Create a feature branch (git checkout -b feature/xyz)
+Create a branch (git checkout -b feature-xyz)
 
-Make your changes and commit them (git commit -m "Add feature xyz")
+Commit changes (git commit -m "Add feature xyz")
 
-Push the branch (git push origin feature/xyz)
+Push branch (git push origin feature-xyz)
 
-Open a Pull Request for review
+Create a Pull Request
