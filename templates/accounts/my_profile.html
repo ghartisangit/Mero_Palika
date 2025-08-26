@@ -15,10 +15,14 @@
     <a href="{%url 'home'%}" class="btn btn-outline-primary btn-block">Home</a>
     <a href="{%url 'all_complaints'%}" class="btn btn-outline-primary btn-block">All Complaints</a>
     <a href="{%url 'my_complaints'%}" class="btn btn-outline-primary btn-block">My Complaints</a>
-    <a href="" class="btn btn-outline-primary btn-block">Change Password</a>
+    <a href="{%url 'change_password' %}" class="btn btn-outline-primary btn-block">Change Password</a>
 	{% else %}
     <a href="{%url 'municipality_dashboard' %}" class="btn btn-outline-primary btn-block">Dashboard</a>
-    <a href="" class="btn btn-outline-primary btn-block">Change Password</a>
+	<a href="{% url 'list_vacancy' %}" class="btn btn-outline-primary btn-block">Vacancy</a>
+    <a href="{% url 'list_training' %}" class="btn btn-outline-primary btn-block">Trainings</a>
+    <a href="{% url 'list_notice' %}" class="btn btn-outline-primary btn-block">Notices</a>
+    <a href="{% url 'list_information' %}" class="btn btn-outline-primary btn-block">Guidelines</a>
+    <a href="{%url 'change_password' %}" class="btn btn-outline-primary btn-block">Change Password</a>
 	{% endif%}
   </ul>
   <br>
@@ -53,7 +57,7 @@
 					<div class="card-body">
 						<img src="{% static 'images/avatars/avatar2.jpg' %}" alt="User Profile Picture" width="50" height="50" style="border-radius:50%;">
 						<p class="mb-0">Email: {{user.email}}</p>
-						<p class="mb-0">Phone: {{user.phone_number}}</p>
+						<p class="mb-0">Phone: {{user.phone_number}} | ward : {{user.ward.ward_number}}</p>
 					</div>
 				</div>
 			</div>

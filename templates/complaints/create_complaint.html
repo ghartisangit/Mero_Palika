@@ -18,9 +18,14 @@
 
       <main class="col-md-9">
         <article class="card">
-          <header class="card-header">
-            <strong class="d-inline-block mr-3">Submit Your Complaint</strong>
-          </header>
+            <header class="card-header d-flex justify-content-between align-items-center">
+              <strong class="d-inline-block mr-3">submit Your Complaint</strong>
+              <a href="javascript:history.back()">
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-remove"></i> Cancel
+                </button>
+              </a>
+            </header>
 
           <div class="card-body">
             <form action="{% url 'post_complaint' %}" method="POST" enctype="multipart/form-data">

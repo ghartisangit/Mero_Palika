@@ -1,16 +1,10 @@
 # admin.py
 from django.contrib import admin
-from .models import Notice, Training, TrainingRegistration, Vacancy, VacancyRegistration, Information, TrainingStatus, RegisterStatus
+from .models import Notice, Training, TrainingRegistration, Vacancy, VacancyRegistration, Information, TrainingStatus
 
 # --- Admin for Status Models ---
 @admin.register(TrainingStatus)
 class TrainingStatusAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-
-
-@admin.register(RegisterStatus)
-class RegisterStatusAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
@@ -52,9 +46,9 @@ class TrainingAdmin(admin.ModelAdmin):
 # --- Admin for TrainingRegistration ---
 @admin.register(TrainingRegistration)
 class TrainingRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('training', 'user', 'registration_status', 'registered_at')
+    list_display = ('training', 'user', 'registered_at')
     search_fields = ('training__title', 'user__email')
-    list_filter = ('registration_status', 'registered_at')
+    list_filter = ['registered_at']
     readonly_fields = ('registered_at',)
 
 
@@ -78,9 +72,9 @@ class VacancyAdmin(admin.ModelAdmin):
 # --- Admin for VacancyRegistration ---
 @admin.register(VacancyRegistration)
 class VacancyRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('Vacancy', 'user', 'VacancyRegistration_status', 'registered_at')
+    list_display = ('Vacancy', 'user', 'registered_at')
     search_fields = ('Vacancy__title', 'user__email')
-    list_filter = ('VacancyRegistration_status', 'registered_at')
+    list_filter = ['registered_at']
     readonly_fields = ('registered_at',)
 
 

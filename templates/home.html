@@ -1,63 +1,66 @@
-{% extends "base.html" %} {% load static %} {% block content %}
-<!-- Hero Section -->
-<section
-  class="py-5 text-center bg-white"
-  style="background: rgba(255, 255, 255, 0.6)"
->
-  <div class="container">
-    <h1 class="display-4">
-      Welcome to <span class="text-primary">Meroपालिका</span>
-    </h1>
-    <p class="lead">
-      Your one-stop digital platform for all municipal services. Get
-      certificates, file complaints, and stay updated with notices efficiently.
-    </p>
-  </div>
-</section>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- Wrapper with background -->
+<div class="hero-ward-wrapper">
+  <!-- Overlay -->
+  <div class="overlay"></div>
 
-<!-- Ward Section -->
-<section class="py-5 bg-white">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-md-6">
-        <h4 class="text-secondary">OUR WARDS</h4>
-        <h2>
-          Explore All Wards of <span class="text-primary">MeroPalika</span>
-        </h2>
-        <p>
-          Get detailed information about each ward — services, representatives,
-          and updates to stay connected with your local governance.
-        </p>
-        <a href="{% url 'all_complaints' %}" class="btn btn-primary">View Complaints</a>
-      </div>
-      <div class="col-md-6">
-        <img
-          src="{% static 'images/items/ward-office.webp' %}"
-          class="img-fluid rounded shadow"
-          alt="Ward Image"
-        />
+  <!-- Hero Section -->
+  <section class="py-5 text-center text-white">
+    <div class="container">
+      <h1 class="display-4">
+        Welcome to <span class="text-danger">Meroपालिका</span>
+      </h1>
+      <p class="lead">
+        Your one-stop digital platform for all municipal services. Get certificates, file complaints,
+        and stay updated with notices efficiently.
+      </p>
+    </div>
+  </section>
+
+  <!-- Ward Section -->
+  <section class="py-5 text-white">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-md-6">
+          <h4 class="text-danger">OUR WARDS</h4>
+          <h2>
+            Explore All Wards of <span class="text-light">MeroPalika</span>
+          </h2>
+          <p>
+            Get detailed information about each ward — services, representatives,
+            and updates to stay connected with your local governance.
+          </p>
+          <a href="{% url 'all_complaints' %}" class="btn btn-danger">View Complaints</a>
+        </div>
+        <div class="col-md-6">
+          <img
+            src="{% static 'images/items/ward-office.webp' %}"
+            class="img-fluid rounded shadow"
+            alt="Ward Image"
+          />
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- Ward Events Gallery -->
 <section class="py-5 bg-light text-center">
   <div class="container">
     <h2>Ward Events</h2>
     <p>Check out the latest activities and events in our ward</p>
-   <div class="row g-3">
-  {% for img in event_images %}
-    <div class="col-md-4 mb-3">
-      <img src="{% static img %}" class="img-fluid rounded" alt="Event {{ forloop.counter }}">
+    <div class="row g-3">
+      {% for img in event_images %}
+      <div class="col-md-4 mb-3">
+        <img src="{% static img %}" class="img-fluid rounded" alt="Event {{ forloop.counter }}">
+      </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
-    
-    <a href="#" class="btn btn-primary mt-3">See Upcoming Event</a>
+    <a href="{% url 'list_training'%}" class="btn btn-primary mt-3">See Upcoming Event</a>
   </div>
 </section>
-
 <!-- Ward Members Section -->
 <section class="py-5 bg-white">
   <div class="container">
@@ -66,8 +69,6 @@
       <p>
         Meet the representatives of your ward. The chairman and vice-chairman
         lead the ward office, supported by secretary and other ward members.
-        Together, they work to serve the community efficiently and ensure proper
-        governance.
       </p>
     </div>
 
@@ -75,42 +76,32 @@
     <h3 class="text-center mb-4">Senior Members</h3>
     <div class="row g-4 justify-content-center">
       <div class="col-md-5 text-center">
-        <div class="card shadow">
+        <div class="card shadow-sm member-card h-100">
           <img
-            src="{% static 'images/items/chairman.jpg' %}"
-            class="card-img-top rounded-circle mx-auto mt-3"
-            style="width: 120px; height: 120px"
+            src="{% static 'images/avatars/avatar1.jpg' %}"
+            class="card-img-top member-img mx-auto mt-3"
             alt="Ward Chairman"
           />
           <div class="card-body">
             <h5 class="card-title">बालेन्द्र शाह</h5>
             <p class="card-text">नगर प्रमुख</p>
-            <p>
-              Email:
-              <a href="mailto:mayor@kathmandu.gov.np">mayor@kathmandu.gov.np</a>
-            </p>
-            <p>Phone: 9851279900</p>
+            <small>Email: mayor@kathmandu.gov.np</small><br />
+            <small>Phone: 9851279900</small>
           </div>
         </div>
       </div>
       <div class="col-md-5 text-center">
-        <div class="card shadow">
+        <div class="card shadow-sm member-card h-100">
           <img
-            src="{% static 'images/items/vice-chairman.jpg' %}"
-            class="card-img-top rounded-circle mx-auto mt-3"
-            style="width: 120px; height: 120px"
+            src="{% static 'images/avatars/avatar2.jpg' %}"
+            class="card-img-top member-img mx-auto mt-3"
             alt="Vice Chairman"
           />
           <div class="card-body">
             <h5 class="card-title">सुनिता डंगोल</h5>
             <p class="card-text">उप– प्रमुख</p>
-            <p>
-              Email:
-              <a href="mailto:deputy.mayor@kathmandu.gov.np"
-                >deputy.mayor@kathmandu.gov.np</a
-              >
-            </p>
-            <p>Phone: 9851279899</p>
+            <small>Email: deputy.mayor@kathmandu.gov.np</small><br />
+            <small>Phone: 9851279899</small>
           </div>
         </div>
       </div>
@@ -120,55 +111,96 @@
     <h3 class="text-center my-4">Members</h3>
     <div class="row g-4 justify-content-center">
       <div class="col-md-4 text-center">
-        <div class="card shadow">
+        <div class="card shadow-sm member-card h-100">
           <img
-            src="{% static 'images/items/secretary.jpg' %}"
-            class="card-img-top rounded-circle mx-auto mt-3"
-            style="width: 120px; height: 120px"
+            src="{% static 'images/avatars/avatar3.jpg' %}"
+            class="card-img-top member-img mx-auto mt-3"
             alt="Secretary"
           />
           <div class="card-body">
             <h5 class="card-title">सरोज गुरागाइँ</h5>
             <p class="card-text">प्रमुख प्रशासकीय अधिकृत</p>
-            <p>
-              Email:
-              <a href="mailto:ceo@kathmandu.gov.np">ceo@kathmandu.gov.np</a>
-            </p>
-            <p>Phone: 01-4168717</p>
+            <small>Email: ceo@kathmandu.gov.np</small><br />
+            <small>Phone: 01-4168717</small>
           </div>
         </div>
       </div>
       <div class="col-md-4 text-center">
-        <div class="card shadow">
+        <div class="card shadow-sm member-card h-100">
           <img
-            src="{% static 'images/items/member1.jpg' %}"
-            class="card-img-top rounded-circle mx-auto mt-3"
-            style="width: 120px; height: 120px"
+            src="{% static 'images/avatars/avatar1.jpg' %}"
+            class="card-img-top member-img mx-auto mt-3"
             alt="Ward Member"
           />
           <div class="card-body">
             <h5 class="card-title">Nabin Manandhar</h5>
             <p class="card-text">Spokesperson</p>
-            <p>Phone: 9851279917</p>
+            <small>Email: ceo@kathmandu.gov.np</small><br/>
+            <small>Phone: 9851279917</small>
           </div>
         </div>
       </div>
       <div class="col-md-4 text-center">
-        <div class="card shadow">
+        <div class="card shadow-sm member-card h-100">
           <img
-            src="{% static 'images/items/member2.jpg' %}"
-            class="card-img-top rounded-circle mx-auto mt-3"
-            style="width: 120px; height: 120px"
+            src="{% static 'images/avatars/avatar2.jpg' %}"
+            class="card-img-top member-img mx-auto mt-3"
             alt="Ward Member"
           />
           <div class="card-body">
             <h5 class="card-title">Nurnidhi Neupane</h5>
             <p class="card-text">Information Officer</p>
-            <p>Phone: 9851081972</p>
+            <small>Email: ceo@kathmandu.gov.np</small><br />
+            <small>Phone: 9851081972</small>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Custom CSS -->
+<style>
+  .member-card {
+    min-height: 300px; /* smaller cards */
+    border-radius: 8px;
+  }
+  .member-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover; /* keeps proportion */
+  }
+  .card-body {
+    padding: 0.75rem;
+  }
+  .card-body small {
+    display: block;
+    color: #555;
+  }
+  .hero-ward-wrapper {
+    position: relative;
+    background: url("{% static 'images/items/p1.avif' %}") no-repeat center center/cover;
+    color: #fff;
+  }
+
+  .hero-ward-wrapper .overlay {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* less opacity overlay */
+    z-index: 0;
+  }
+
+  .hero-ward-wrapper section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-ward-wrapper h1 span,
+  .hero-ward-wrapper h2 span {
+  color: #ff0707ff; /* highlight */
+  }
+</style>
+
 {% endblock %}

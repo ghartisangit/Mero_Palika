@@ -16,7 +16,7 @@ def post_complaint(request):
         category_name = request.POST.get('category', '').strip()
         image = request.FILES.get('image')
 
-        # Validation
+  
         if not all([title, description, category_name]):
             messages.error(request, "Please fill all required fields.")
             return redirect('post_complaint')
@@ -27,20 +27,17 @@ def post_complaint(request):
             messages.error(request, "Your profile does not have a ward assigned.")
             return redirect('post_complaint')
 
-        # Get category
         try:
             category = Category.objects.get(category_name=category_name)
         except Category.DoesNotExist:
             messages.error(request, "Invalid category selected.")
             return redirect('post_complaint')
 
-        # Get default status
         status = Status.objects.filter(name='Pending').first()
         if not status:
             messages.error(request, "Default status not set in database.")
             return redirect('post_complaint')
 
-        # Save complaint
         Complaint.objects.create(
             user=request.user,
             title=title,
@@ -61,23 +58,27 @@ def post_complaint(request):
 
 @login_required(login_url='login')
 def all_complaint(request):
-    complaints_list = Complaint.objects.all().order_by('-created_at') 
-    paginator = Paginator(complaints_list, 6)  # 6 complaints per page 
+    user = request.user
+    if user.is_authenticated :
+        complaints_list = Complaint.objects.filter(ward=user.ward, ).order_by('-created_at')
+    else:
+        complaints_list = Complaint.objects.none()  
+    
 
+    paginator = Paginator(complaints_list, 6)  
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    post_count= paginator.count 
+    post_count = paginator.count  
 
     context = {
         'complaints': page_obj, 
-        'wards':Ward.objects.all(),
+        'wards': Ward.objects.all(),  
         'statuses': Status.objects.all(),
         'links': Category.objects.all(),
         'post_count': post_count
     }
 
-    return render(request, 'complaints/all_complaints.html',context )
-
+    return render(request, 'complaints/all_complaints.html', context)
 
 @login_required(login_url='login')
 def post_detail(request, id):
@@ -169,26 +170,24 @@ def comment_complaint(request, pk):
     return redirect('post_detail', id=pk)
 
 
-# Catagory search for all complaints
 @login_required(login_url='login')
 def search_complaints(request):
-
     keyword = request.GET.get('q', '').strip()
     category = request.GET.get('category')
-    municipality = request.GET.get('municipality')
     status = request.GET.get('status')
-    ward_number = request.GET.get('ward_number')
+    complaints = Complaint.objects.filter(
+        ward=request.user.ward,
+        is_hidden=False
+    ).order_by('-created_at')
 
-    complaints = Complaint.objects.all()
-    
+    # Apply filters
     if keyword:
-        complaints = complaints.filter(title__icontains=keyword)
+        complaints = complaints.filter(
+            Q(title__icontains=keyword) | Q(description__icontains=keyword)
+        )
 
     if category:
         complaints = complaints.filter(category__id=category)
-        
-    if municipality and ward_number:
-        complaints = complaints.filter(ward__ward_number=ward_number, ward__municipality_id=municipality)
 
     if status:
         complaints = complaints.filter(status=status)
@@ -199,14 +198,14 @@ def search_complaints(request):
         'complaints': complaints,
         'post_count': post_count,
         'links': Category.objects.all(),
-        'wards': Ward.objects.all(),
+        'wards': Ward.objects.filter(id=request.user.ward.id),
         'statuses': Status.objects.all(),
     }
 
     return render(request, 'complaints/all_complaints.html', context)
 
 
-# category search for My compalints
+
 @login_required(login_url='login')
 def my_search_complaints(request):
 
@@ -247,7 +246,6 @@ def my_search_complaints(request):
 def delete_complaint(request, pk):
     complaint = get_object_or_404(Complaint, pk=pk)
 
-    # Check if current user is the creator
     if complaint.user != request.user:
         messages.error(request, "You are not allowed to delete this complaint.")
         return redirect(request.META.get('HTTP_REFERER', 'my_complaints'))  
@@ -276,10 +274,10 @@ def delete_comment(request, comment_id):
 
 @login_required
 def edit_complaint(request, complaint_id):
-    # Get the complaint, ensure it belongs to the logged-in user
+   
     complaint = get_object_or_404(Complaint, id=complaint_id, user=request.user)
     
-    # Load categories for dropdown
+    
     categories = Category.objects.all()
 
     if request.method == 'POST':
@@ -288,12 +286,11 @@ def edit_complaint(request, complaint_id):
         description = request.POST.get('description', '').strip()
         image = request.FILES.get('image')
 
-        # Validation
         if not title or not description or not category_id:
             messages.error(request, "Please fill all required fields.")
             return redirect('edit_complaint', complaint_id=complaint.id)
 
-        # Update fields
+        
         complaint.title = title
         complaint.description = description
         complaint.category = Category.objects.get(id=category_id)
@@ -307,7 +304,7 @@ def edit_complaint(request, complaint_id):
         complaint.ward = ward
         complaint.municipality = ward.municipality
 
-        # Update image if new one uploaded
+       
         if image:
             complaint.image = image
 

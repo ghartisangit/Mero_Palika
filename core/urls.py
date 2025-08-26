@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('djangoadmin/',admin.site.urls),
     path('',views.home, name='home'),
-    path('welcome/',views.welcome, name='welcome'),
     path('accounts/', include('accounts.urls')),
     path('complaints/', include('complaints.urls')),
     path('dashboard/', include('dashboard.urls')),

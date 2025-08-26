@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y">
+  <div class="container">
+    {% include 'includes/alerts.html' %}
+    <div class="row">
+
+      <!-- Sidebar -->
+      <aside class="col-md-3 mb-4">
+        <button class="btn btn-light btn-block" onclick="window.history.back();">
+          <i class="fa fa-arrow-left"></i> <span class="text">Back</span>
+        </button>
+        {% if user.user_type == 'municipality' %}
+        <a href="{% url 'create_vacancy' %}" class="btn btn-outline-primary btn-block">Create Vacancy</a>
+        {% endif %}
+      </aside>
+
+      <!-- Main Content -->
+      <main class="col-md-9">
+        <h4 class="mb-4">Vacancies</h4>
+
+        {% if vacancies %}
+          {% for vacancy in vacancies %}
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                 <!-- Status badge top-right -->
+                <span 
+                    class="badge position-absolute" 
+                    style="top: 10px; right: 10px; 
+                           background-color: {% if vacancy.vacancy_status.name == 'Available' %}#28a745
+                                             {% elif vacancy.vacancy_status.name == 'Expired' %}#dc3545
+                                             {% else %}#6c757d{% endif %};
+                           color: white;">
+                    {{ vacancy.vacancy_status.name }}
+                </span>
+                          <h5 class="card-title">{{ vacancy.title }}</h5>
+                          <p>{{ vacancy.description|linebreaksbr }}</p>
+              <small class="text-muted">Posted on: {{ vacancy.created_at|date:"M d, Y" }}</small>
+
+              <!-- Status badge -->
+              <div class="mt-2">
+                {% if user.user_type == 'municipality' %}
+                <form method="POST" action="{% url 'update_vacancy_status' vacancy.id %}">
+                  {% csrf_token %}
+                  <select name="status" onchange="this.form.submit()" class="form-control form-control-sm w-auto d-inline">
+                    {% for status in statuses %}
+                      <option value="{{ status.id }}" {% if vacancy.vacancy_status.id == status.id %}selected{% endif %}>
+                        {{ status.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </form>
+                {% endif %}
+              </div>
+
+              <!-- Register button only if user and status is Available -->
+              {% if user.user_type == 'user' and vacancy.vacancy_status.name == 'Available' %}
+               <div class="mt-2"> 
+                  {% if vacancy.registered %}
+                      <button class="btn btn-sm btn-success " disabled>Registered</button>
+                  {% else %}
+                      <a href="{% url 'register_vacancy' vacancy.id %}" class="btn btn-sm btn-primary ">Register</a>
+                  {% endif %}
+                  </div>
+              {% endif %}
+
+              <!-- Edit/Delete buttons for municipality/admin -->
+              {% if user.user_type in 'municipality' or user.user_type == 'admin' %}
+              <div class="d-flex justify-content-end mt-2">
+                  <a href="{% url 'edit_vacancy' vacancy.id %}" class="btn btn-sm btn-outline-primary mr-2">Edit</a>
+                  <form method="POST" action="{% url 'delete_vacancy' vacancy.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                  </form>
+              </div>
+              {% endif %}
+
+              <!-- Applicant count -->
+              <small class="text-muted mt-1 d-block">No.of.Applicants: {{ vacancy.applicant_count }}</small>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No vacancies found.</p>
+        {% endif %}
+
+        <!-- Pagination -->
+        <nav class="mt-4" aria-label="Page navigation">
+          {% if vacancies.has_other_pages %}
+            <ul class="pagination justify-content-center">
+              {% if vacancies.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ vacancies.previous_page_number }}">Previous</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+              {% endif %}
+
+              {% for num in vacancies.paginator.page_range %}
+                {% if vacancies.number == num %}
+                  <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+              {% endfor %}
+
+              {% if vacancies.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ vacancies.next_page_number }}">Next</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </nav>
+
+      </main>
+    </div>
+  </div>
+</section>
+{% endblock %}

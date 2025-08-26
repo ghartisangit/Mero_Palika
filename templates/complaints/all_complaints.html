@@ -43,28 +43,6 @@
         <div class="card mb-3">
           <article class="filter-group">
             <header class="card-header">
-              <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true">
-                <i class="icon-control fa fa-chevron-down"></i>
-                <h6 class="title">Municipality</h6>
-              </a>
-            </header>
-            <div class="filter-content collapse show" id="collapse_2">
-              <div class="card-body">
-                <ul class="list-menu">
-                    <li><a href="{%url 'all_complaints'%}">All categories</a></li>
-                  {% for ward in wards %}
-                    <li><a href="{% url 'search_complaints' %}?municipality={{ ward.municipality.id }}&ward_number={{ ward.ward_number }}">{{ ward.municipality }} - Ward {{ ward.ward_number }}</a></li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Category Filter Card 3 -->
-        <div class="card mb-3">
-          <article class="filter-group">
-            <header class="card-header">
               <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true">
                 <i class="icon-control fa fa-chevron-down"></i>
                 <h6 class="title">Status</h6>
@@ -83,10 +61,11 @@
         </div>
 
         <!-- Buttons -->
-        {% if user.type == 'user'%}
+        {% if user.user_type != 'municipality' %}
         <a href="{%url 'post_complaint'%}" class="btn btn-success btn-block mb-2">Create New Complaint</a>
+        {% endif %}
         <a href="{%url 'my_complaints'%}" class="btn btn-outline-primary btn-block">My Complaints</a>
-        {% endif%}
+  
       </aside>
 
       <!-- Main Content -->
@@ -152,7 +131,7 @@
               class="d-flex justify-content-between align-items-center mt-auto"
             >
               <!-- Like Button -->
-              {% if user != complaint.user %}
+             {% if user != complaint.user and user.user_type != 'municipality' %}
               <form
                 method="POST"
                 action="{% url 'like_complaint' complaint.id %}"
@@ -169,7 +148,7 @@
               {% endif %}
 
               <!-- Comment Button -->
-               {% if user != complaint.user %}
+              {% if user != complaint.user and user.user_type != 'municipality' %}
               <a href="{% url 'post_detail' complaint.id %}">
                 <button class="btn btn-sm btn-outline-secondary">
                   <i class="fas fa-comments"></i> {{ complaint.comments.count }}

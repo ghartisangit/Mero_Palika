@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y">
+  <div class="container">
+    {% include 'includes/alerts.html' %}
+    <div class="row">
+
+      <!-- Sidebar -->
+      <aside class="col-md-3 mb-4">
+        <button class="btn btn-light btn-block" onclick="window.history.back();">
+          <i class="fa fa-arrow-left"></i> <span class="text">Back</span>
+        </button>
+        {% if user.user_type == 'municipality' %}
+        <a href="{% url 'create_training' %}" class="btn btn-outline-primary btn-block">Create Training</a>
+        {% endif %}
+      </aside>
+
+      <!-- Main Content -->
+      <main class="col-md-9">
+        <h4 class="mb-4">Trainings</h4>
+
+        {% if trainings %}
+          {% for training in trainings %}
+          <div class="card mb-4 shadow-sm position-relative">
+            
+            <!-- Status badge top-right -->
+            <span 
+                class="badge position-absolute" 
+                style="top: 10px; right: 10px; 
+                       background-color: {% if training.training_status.name == 'Available' %}#28a745
+                                         {% elif training.training_status.name == 'Expired' %}#dc3545
+                                         {% else %}#6c757d{% endif %};
+                       color: white;">
+                {{ training.training_status.name }}
+            </span>
+
+            <div class="card-body">
+              <h5 class="card-title">{{ training.title }}</h5>
+              <p>{{ training.description|linebreaksbr }}</p>
+              {% if training.image %}
+              <img src="{{ training.image.url }}" class="img-fluid mt-2 mb-2">
+              {% else %}
+              <img src="{% static 'images/complain.png' %}" class="img-fluid mt-2 mb-2">
+              {% endif %}
+              <small class="text-muted">Posted on: {{ training.created_at|date:"M d, Y" }}</small>
+
+              <!-- Status change for municipality -->
+              {% if user.user_type == 'municipality' %}
+              <div class="mt-2">
+                <form method="POST" action="{% url 'update_training_status' training.id %}">
+                  {% csrf_token %}
+                  <select name="status" onchange="this.form.submit()" class="form-control form-control-sm w-auto d-inline">
+                    {% for status in statuses %}
+                      <option value="{{ status.id }}" {% if training.training_status.id == status.id %}selected{% endif %}>
+                        {{ status.name }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </form>
+              </div>
+              {% endif %}
+
+
+
+            <!-- Register button only for users and available trainings -->
+              {% if user.user_type == 'user' and training.training_status.name == 'Available' %}
+                  <div class="mt-2"> 
+                      {% if training.registered %}
+                          <button class="btn btn-sm btn-success" disabled>Registered</button>
+                      {% else %}
+                          <a href="{% url 'register_training' training.id %}" class="btn btn-sm btn-primary">Register</a>
+                      {% endif %}
+                  </div>
+              {% endif %}
+
+              <!-- Edit/Delete buttons for municipality/admin -->
+              {% if user.user_type in 'municipality' or user.user_type == 'admin' %}
+              <div class="d-flex justify-content-end mt-2">
+                  <a href="{% url 'edit_training' training.id %}" class="btn btn-sm btn-outline-primary mr-2">Edit</a>
+                  <form method="POST" action="{% url 'delete_training' training.id %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                  </form>
+              </div>
+              {% endif %}
+
+              <!-- Applicant count -->
+              <small class="text-muted mt-1 d-block">No.of.Applicants: {{ training.applicant_count }}</small>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No trainings found.</p>
+        {% endif %}
+
+        <!-- Pagination -->
+        <nav class="mt-4" aria-label="Page navigation">
+          {% if trainings.has_other_pages %}
+            <ul class="pagination justify-content-center">
+              {% if trainings.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ trainings.previous_page_number }}">Previous</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+              {% endif %}
+
+              {% for num in trainings.paginator.page_range %}
+                {% if trainings.number == num %}
+                  <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+              {% endfor %}
+
+              {% if trainings.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ trainings.next_page_number }}">Next</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </nav>
+
+      </main>
+    </div>
+  </div>
+</section>
+{% endblock %}

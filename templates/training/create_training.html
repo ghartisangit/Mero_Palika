@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+  {% include 'includes/alerts.html' %}
+  <div class="container">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <aside class="col-md-3">
+        <a href="{% url 'list_training' %}" class="btn btn-outline-primary btn-block">View Trainings</a>
+        <a class="btn btn-light btn-block" href="javascript:history.back()">
+          <i class="fa fa-arrow-left"></i> <span class="text">Back</span>
+        </a>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="col-md-9">
+        <article class="card">
+          <header class="card-header">
+            <strong class="d-inline-block mr-3">Create Training</strong>
+          </header>
+
+          <div class="card-body">
+            <form action="{% url 'create_training' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <!-- Title -->
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" placeholder="Enter training title" required>
+              </div>
+
+              <!-- Description -->
+              <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="form-control" rows="4" placeholder="Describe the training in detail..." required></textarea>
+              </div>
+
+              <!-- Expiry Date -->
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="date" name="expiry_date" class="form-control">
+                <small class="text-muted">Optional: Training will auto-expire after this date.</small>
+              </div>
+
+              <!-- Image (Optional) -->
+              <div class="form-group">
+                <label>Image (Optional)</label>
+                <input type="file" name="image" class="form-control-file">
+              </div>
+
+              <input type="submit" value="Create Training" class="btn btn-primary mt-2">
+            </form>
+          </div>
+        </article>
+      </main>
+
+    </div> <!-- row -->
+  </div>
+</section>
+{% endblock %}

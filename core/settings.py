@@ -82,9 +82,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'awaz_db',
-        'USER': 'root',
-        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -157,12 +154,4 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'sangitmagar160@gmail.com'
-EMAIL_HOST_PASSWORD = 'chqe allq yajj vbpo'
-DEFAULT_FROM_EMAIL = 'noreply@meropalika.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
